@@ -28,7 +28,7 @@ window.onload = function () {
 
   //! Cria 6 círculos com uma cor dentro
 
-  //? Requisito 2 - 5
+  //? Requisito 2 - 5 - 7
 
   function geraNumero2(min, max) {
     min = Math.ceil(min);
@@ -53,15 +53,39 @@ window.onload = function () {
 
   //! Preenche os círculos com cores aleatórias e escreve uma delas como texto do paragrafo
 
+  if (localStorage.getItem('pontuacao') == null) {
+    localStorage.setItem('pontuacao', 0);
+  }
+  let placarSalvo = localStorage.getItem('pontuacao');
+  console.log(parseInt(placarSalvo));
+
   let escolherCor = document.querySelector('#lista-cores');
+  let placar = document.querySelector('#score');
+  placar.innerHTML = placarSalvo;
   escolherCor.addEventListener('click', function (evento) {
     if (evento.target.classList.value == 'ball') {
       if (evento.target.style.backgroundColor === paragrafo.innerHTML) {
         document.querySelector('#answer').innerHTML = 'Acertou!';
+        placar.innerHTML = parseInt(placarSalvo) + 3;
       } else {
         document.querySelector('#answer').innerHTML = 'Errou! Tente novamente!';
       }
     }
+    localStorage.setItem(
+      'pontuacao',
+      document.querySelector('#score').innerHTML
+    );
   });
+
   //! Verifica se a cor clicada é a mesma que aparece no testo
+
+  //? Requisito 6
+
+  let botaoTentarNovamente = document.querySelector('#reset-game');
+
+  botaoTentarNovamente.addEventListener('click', function () {
+    location.reload();
+  });
+
+  //! Botao que reinicia o jogo
 };
